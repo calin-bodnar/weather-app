@@ -19,7 +19,7 @@ public class WeatherEntity {
     private WeatherMain weatherMain;
     @SerializedName("visibility")
     @Expose
-    private int visibility;
+    private double visibility;
     @SerializedName("wind")
     @Expose
     private Wind wind;
@@ -56,11 +56,11 @@ public class WeatherEntity {
         this.weatherMain = weatherMain;
     }
 
-    public int getVisibility() {
+    public double getVisibility() {
         return visibility;
     }
 
-    public void setVisibility(int visibility) {
+    public void setVisibility(double visibility) {
         this.visibility = visibility;
     }
 
