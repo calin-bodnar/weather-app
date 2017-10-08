@@ -32,6 +32,11 @@ public class WeatherEntity {
     @Expose
     private String name;
 
+    public WeatherEntity(int id, String name) {
+        this.id = id;
+        this.name = name;
+    }
+
     public Sys getSys() {
         return sys;
     }
@@ -40,8 +45,15 @@ public class WeatherEntity {
         this.sys = sys;
     }
 
-    public List<Weather> getWeather() {
-        return weather;
+    public boolean hasWeather() {
+        return weather != null && !weather.isEmpty();
+    }
+
+    public Weather getWeather() {
+        if (hasWeather()) {
+            return weather.get(0);
+        }
+        return null;
     }
 
     public void setWeather(List<Weather> weather) {

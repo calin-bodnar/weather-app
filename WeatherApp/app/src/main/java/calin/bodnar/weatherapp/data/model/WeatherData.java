@@ -31,4 +31,8 @@ public class WeatherData {
         this.weatherEntities = weatherEntities;
     }
 
+    public boolean isEmpty() {
+        return weatherEntities == null || weatherEntities.isEmpty();
+    }
+
 }

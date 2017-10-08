@@ -22,7 +22,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".WeatherActivity"
+            android:name=".weather.WeatherActivity"
             android:screenOrientation="portrait" />
 
     </application>

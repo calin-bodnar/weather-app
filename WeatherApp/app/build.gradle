@@ -84,8 +84,7 @@ dependencies {
     compile "com.squareup.retrofit2:converter-gson:$rootProject.retrofitVersion"
     compile "com.squareup.retrofit2:adapter-rxjava2:$rootProject.retrofitVersion"
     compile "com.google.code.gson:gson:$rootProject.gsonVersion"
-
-
+    compile "com.squareup.picasso:picasso:$rootProject.picassoVersion"
 
     // Dependencies for local unit tests
     testCompile "junit:junit:$rootProject.ext.junitVersion"
