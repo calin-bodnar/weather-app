@@ -1,17 +1,16 @@
 
 package calin.bodnar.weatherapp.data.model;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 import java.util.List;
 
-public class WeatherEntity {
+public class WeatherEntity implements Parcelable {
 
-    @SerializedName("sys")
-    @Expose
-    private Sys sys;
-    @SerializedName("weather")
     @Expose
     private List<Weather> weather = null;
     @SerializedName("main")
@@ -35,14 +34,6 @@ public class WeatherEntity {
     public WeatherEntity(int id, String name) {
         this.id = id;
         this.name = name;
-    }
-
-    public Sys getSys() {
-        return sys;
-    }
-
-    public void setSys(Sys sys) {
-        this.sys = sys;
     }
 
     public boolean hasWeather() {
@@ -108,4 +99,41 @@ public class WeatherEntity {
         this.name = name;
     }
 
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeTypedList(this.weather);
+        dest.writeParcelable(this.weatherMain, flags);
+        dest.writeDouble(this.visibility);
+        dest.writeParcelable(this.wind, flags);
+        dest.writeInt(this.dt);
+        dest.writeInt(this.id);
+        dest.writeString(this.name);
+    }
+
+    protected WeatherEntity(Parcel in) {
+        this.weather = in.createTypedArrayList(Weather.CREATOR);
+        this.weatherMain = in.readParcelable(WeatherMain.class.getClassLoader());
+        this.visibility = in.readDouble();
+        this.wind = in.readParcelable(Wind.class.getClassLoader());
+        this.dt = in.readInt();
+        this.id = in.readInt();
+        this.name = in.readString();
+    }
+
+    public static final Parcelable.Creator<WeatherEntity> CREATOR = new Parcelable.Creator<WeatherEntity>() {
+        @Override
+        public WeatherEntity createFromParcel(Parcel source) {
+            return new WeatherEntity(source);
+        }
+
+        @Override
+        public WeatherEntity[] newArray(int size) {
+            return new WeatherEntity[size];
+        }
+    };
 }

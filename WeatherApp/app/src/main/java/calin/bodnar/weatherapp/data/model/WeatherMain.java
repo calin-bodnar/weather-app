@@ -1,10 +1,13 @@
 
 package calin.bodnar.weatherapp.data.model;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class WeatherMain {
+public class WeatherMain implements Parcelable {
 
     @SerializedName("temp")
     @Expose
@@ -62,4 +65,40 @@ public class WeatherMain {
         this.tempMax = tempMax;
     }
 
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeDouble(this.temp);
+        dest.writeDouble(this.pressure);
+        dest.writeDouble(this.humidity);
+        dest.writeDouble(this.tempMin);
+        dest.writeDouble(this.tempMax);
+    }
+
+    public WeatherMain() {
+    }
+
+    protected WeatherMain(Parcel in) {
+        this.temp = in.readDouble();
+        this.pressure = in.readDouble();
+        this.humidity = in.readDouble();
+        this.tempMin = in.readDouble();
+        this.tempMax = in.readDouble();
+    }
+
+    public static final Parcelable.Creator<WeatherMain> CREATOR = new Parcelable.Creator<WeatherMain>() {
+        @Override
+        public WeatherMain createFromParcel(Parcel source) {
+            return new WeatherMain(source);
+        }
+
+        @Override
+        public WeatherMain[] newArray(int size) {
+            return new WeatherMain[size];
+        }
+    };
 }
