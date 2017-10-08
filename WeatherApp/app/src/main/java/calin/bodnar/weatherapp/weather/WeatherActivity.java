@@ -1,5 +1,6 @@
 package calin.bodnar.weatherapp.weather;
 
+import android.content.Intent;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -20,18 +21,20 @@ import calin.bodnar.weatherapp.data.model.WeatherEntity;
 import calin.bodnar.weatherapp.data.model.WeatherMain;
 import calin.bodnar.weatherapp.data.source.WeatherDataRepository;
 import calin.bodnar.weatherapp.data.source.remote.WeatherRemoteDataSource;
+import calin.bodnar.weatherapp.util.Constants;
 import calin.bodnar.weatherapp.util.schedulers.SchedulerProvider;
+import calin.bodnar.weatherapp.weatherdetails.WeatherDetailsActivity;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 
 public class WeatherActivity extends AppCompatActivity implements WeatherContract.View {
-    private static final String WEATHER_ICON_URL = "http://openweathermap.org/img/w/%s.png";
-
     private WeatherPresenter weatherPresenter;
     private WeatherListAdapter listAdapter;
 
     WeatherItemListener itemListener = weatherEntity -> {
-        // TODO: 08/10/2017 Open details activity
+        Intent intent = new Intent(this, WeatherDetailsActivity.class);
+        intent.putExtra(WeatherDetailsActivity.EXTRA_WEATHER_ENTITY, weatherEntity);
+        startActivity(intent);
     };
 
     @Override
@@ -139,7 +142,7 @@ public class WeatherActivity extends AppCompatActivity implements WeatherContrac
 
             ImageView weatherIV = rowView.findViewById(R.id.weather_img);
             if (weatherEntity.hasWeather()) {
-                String url = String.format(WEATHER_ICON_URL, weatherEntity.getWeather().getIcon());
+                String url = String.format(Constants.WEATHER_ICON_URL, weatherEntity.getWeather().getIcon());
                 Picasso.with(viewGroup.getContext())
                         .load(url)
                         .into(weatherIV);
