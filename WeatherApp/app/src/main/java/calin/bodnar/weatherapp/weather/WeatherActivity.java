@@ -1,9 +1,10 @@
 package calin.bodnar.weatherapp.weather;
 
 import android.content.Intent;
+import android.os.Bundle;
+import android.support.test.espresso.IdlingResource;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,6 +13,7 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.google.common.annotations.VisibleForTesting;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
@@ -22,6 +24,7 @@ import calin.bodnar.weatherapp.data.model.WeatherMain;
 import calin.bodnar.weatherapp.data.source.WeatherDataRepository;
 import calin.bodnar.weatherapp.data.source.remote.WeatherRemoteDataSource;
 import calin.bodnar.weatherapp.util.Constants;
+import calin.bodnar.weatherapp.util.EspressoIdlingResource;
 import calin.bodnar.weatherapp.util.schedulers.SchedulerProvider;
 import calin.bodnar.weatherapp.weatherdetails.WeatherDetailsActivity;
 
@@ -32,9 +35,7 @@ public class WeatherActivity extends AppCompatActivity implements WeatherContrac
     private WeatherListAdapter listAdapter;
 
     WeatherItemListener itemListener = weatherEntity -> {
-        Intent intent = new Intent(this, WeatherDetailsActivity.class);
-        intent.putExtra(WeatherDetailsActivity.EXTRA_WEATHER_ENTITY, weatherEntity);
-        startActivity(intent);
+        weatherPresenter.openWeatherDetails(weatherEntity);
     };
 
     @Override
@@ -81,6 +82,13 @@ public class WeatherActivity extends AppCompatActivity implements WeatherContrac
     @Override
     public void showNoWeatherInfo() {
         // No special handling needed
+    }
+
+    @Override
+    public void showWeatherDetailsUi(WeatherEntity weatherEntity) {
+        Intent intent = new Intent(this, WeatherDetailsActivity.class);
+        intent.putExtra(WeatherDetailsActivity.EXTRA_WEATHER_ENTITY, weatherEntity);
+        startActivity(intent);
     }
 
     @Override
@@ -152,6 +160,11 @@ public class WeatherActivity extends AppCompatActivity implements WeatherContrac
 
             return rowView;
         }
+    }
+
+    @VisibleForTesting
+    public IdlingResource getCountingIdlingResource() {
+        return EspressoIdlingResource.getIdlingResource();
     }
 
     interface WeatherItemListener {

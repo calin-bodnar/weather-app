@@ -1,5 +1,6 @@
 package calin.bodnar.weatherapp.weather;
 
+import android.support.annotation.NonNull;
 import android.widget.ImageView;
 
 import java.util.List;
@@ -19,6 +20,8 @@ public class WeatherContract {
         void showWeatherInfo(List<WeatherEntity> weatherEntities);
 
         void showNoWeatherInfo();
+
+        void showWeatherDetailsUi(WeatherEntity weatherEntity);
     }
 
     interface Presenter extends BasePresenter {
@@ -26,6 +29,8 @@ public class WeatherContract {
         List<WeatherEntity> getDefaultWeatherCities();
 
         void loadWeatherData();
+
+        void openWeatherDetails(@NonNull WeatherEntity weatherEntity);
 
     }
 }

@@ -1,11 +1,9 @@
 package calin.bodnar.weatherapp.weather;
 
 import android.support.annotation.NonNull;
-import android.widget.ImageView;
 
 import com.google.common.base.Joiner;
 import com.google.common.collect.Collections2;
-import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -104,6 +102,12 @@ public class WeatherPresenter implements WeatherContract.Presenter {
                         });
 
         compositeDisposable.add(disposable);
+    }
+
+    @Override
+    public void openWeatherDetails(@NonNull WeatherEntity weatherEntity) {
+        checkNotNull(weatherEntity, "weatherEntity cannot be null!");
+        weatherView.showWeatherDetailsUi(weatherEntity);
     }
 
     @Override
