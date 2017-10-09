@@ -1,8 +1,8 @@
 package calin.bodnar.weatherapp.weatherdetails;
 
 import android.annotation.SuppressLint;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -13,6 +13,7 @@ import calin.bodnar.weatherapp.data.model.WeatherEntity;
 import calin.bodnar.weatherapp.data.model.WeatherMain;
 import calin.bodnar.weatherapp.data.model.Wind;
 import calin.bodnar.weatherapp.util.Constants;
+import calin.bodnar.weatherapp.util.Utils;
 
 public class WeatherDetailsActivity extends AppCompatActivity {
     public static final String EXTRA_WEATHER_ENTITY = "WeatherDetailsActivity.WeatherEntity.Extra";
@@ -55,7 +56,7 @@ public class WeatherDetailsActivity extends AppCompatActivity {
         Wind wind = weatherEntity.getWind();
         if (wind != null) {
             windSpeedTV.setText(String.format("%d m/s", Math.round(wind.getSpeed())));
-            windDirectionTV.setText(String.format("%d degrees", Math.round(wind.getDeg())));
+            windDirectionTV.setText(Utils.degreeToCompass(wind.getDeg()));
         }
     }
 }
