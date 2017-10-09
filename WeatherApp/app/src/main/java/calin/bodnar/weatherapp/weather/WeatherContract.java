@@ -1,7 +1,6 @@
 package calin.bodnar.weatherapp.weather;
 
 import android.support.annotation.NonNull;
-import android.widget.ImageView;
 
 import java.util.List;
 

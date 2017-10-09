@@ -1,5 +1,6 @@
 package calin.bodnar.weatherapp.weather;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.test.espresso.IdlingResource;
@@ -34,9 +35,7 @@ public class WeatherActivity extends AppCompatActivity implements WeatherContrac
     private WeatherPresenter weatherPresenter;
     private WeatherListAdapter listAdapter;
 
-    WeatherItemListener itemListener = weatherEntity -> {
-        weatherPresenter.openWeatherDetails(weatherEntity);
-    };
+    private WeatherItemListener itemListener = weatherEntity -> weatherPresenter.openWeatherDetails(weatherEntity);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -129,6 +128,7 @@ public class WeatherActivity extends AppCompatActivity implements WeatherContrac
             return i;
         }
 
+        @SuppressLint("DefaultLocale")
         @Override
         public View getView(int position, View view, ViewGroup viewGroup) {
             View rowView = view;
